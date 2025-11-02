@@ -1,0 +1,540 @@
+# Product Requirements Document (PRD) - Renti
+
+## 1\. Overview
+
+**App Name:** Renti
+
+Renti is a comprehensive Progressive Web App (PWA) designed to streamline rent collection and tenant management for property owners and managers. The application provides a centralized digital ledger system that eliminates the complexities of managing multiple tenants, tracking payment histories, and maintaining accurate financial records.
+
+The primary target audience includes individual landlords, property management companies, and real estate professionals who manage rental properties with multiple tenants. Renti solves key problems such as manual rent tracking, payment disputes, disorganized financial records, difficulty in monitoring overdue payments, and the lack of transparency between landlords and tenants regarding payment histories and outstanding balances.
+
+## 2\. Essential Core Features
+
+### Tenant Management
+
+* Add, edit, and delete tenant profiles with contact information
+* Property assignment and lease term tracking
+* Tenant photo and document storage
+* Communication history logs
+
+### Rent Collection Ledger
+
+* Digital rent collection tracking system
+* Automated payment status updates
+* Monthly rent amount configuration per tenant
+* Payment method recording (cash, check, bank transfer, etc.)
+
+### Payment Processing
+
+* Manual payment entry with timestamps
+* Payment confirmation and receipt generation
+* Bulk payment processing for multiple tenants
+* Payment reminder notifications
+
+### Financial Reporting
+
+* Monthly and annual revenue reports
+* Outstanding balance summaries
+* Payment history exports (PDF/CSV)
+* Tenant-wise payment analytics
+
+### Dashboard Analytics
+
+* Overview of total collected rent
+* Overdue payment alerts
+* Occupancy rates and statistics
+* Quick action buttons for common tasks
+
+### Notification System
+
+* Rent due reminders for tenants
+* Overdue payment alerts for landlords
+* Payment confirmation notifications
+* Customizable notification preferences
+
+### User Authentication & Security
+
+* Secure login/logout functionality
+* Multi-factor authentication support
+* Role-based access control
+* Data encryption and privacy protection
+
+## 3\. Tech Stack
+
+### Front-End
+
+* **React** \- Component\-based UI development
+* **Tailwind CSS** \- Utility\-first styling framework
+* **Vite** \- Fast build tool and development server
+* **PWA Configuration** \- Service workers\, offline functionality\, and mobile optimization
+
+### Back-End
+
+* **Supabase** \- Complete backend solution providing:
+    * PostgreSQL database for data storage
+    * Authentication and user management
+    * Real-time subscriptions for live updates
+    * Row Level Security (RLS) for data protection
+    * File storage for tenant documents and photos
+
+### APIs & Integrations
+
+* **Supabase Auth API** \- User authentication and session management
+* **Supabase Database API** \- CRUD operations and real\-time data sync
+* **Web Push API** \- Browser\-based push notifications
+* **Payment Gateway Integration** \- Future integration for online payments
+* **SMS/Email API** \- Notification delivery services
+
+### Technical Requirements
+
+* Progressive Web App (PWA) capabilities with offline functionality
+* Responsive design for mobile-first experience
+* Touch-optimized interface elements
+* Local data caching and synchronization
+* Push notification support
+
+## 4\. Design Preferences
+
+### Interface
+
+The interface should embody a clean, professional aesthetic with intuitive navigation optimized for mobile interactions. The design should prioritize clarity and ease of use while maintaining a trustworthy appearance suitable for financial management.
+
+### Color Palette
+
+* **Primary Color:** #2563EB (Professional Blue) - Main interface elements and CTAs
+* **Secondary Color:** #64748B (Slate Gray) - Supporting text and secondary actions
+* **Accent Color:** #10B981 (Success Green) - Payment confirmations and positive indicators
+* **Alert Colors:** #EF4444 (Red) for overdue payments, #F59E0B (Amber) for warnings
+
+### Typography
+
+* **Headings:** Inter or Poppins - Modern, readable sans-serif for titles and headers
+* **Body Text:** System fonts (San Francisco, Roboto) - Native system fonts for optimal mobile readability
+* **Monospace:** JetBrains Mono - For financial figures and payment amounts
+
+### Additional Design Considerations
+
+* Touch-friendly button sizes (minimum 44px tap targets)
+* High contrast ratios for accessibility
+* Consistent spacing using 8px grid system
+* Subtle shadows and rounded corners for modern appearance
+* Loading states and micro-interactions for enhanced UX
+
+## 5\. All Screens/Pages
+
+### 5.1 Authentication Screens
+
+#### Login Screen (`/login`)
+
+**UI Elements:**
+
+* App logo and branding
+* Email input field with validation
+* Password input field with show/hide toggle
+* "Remember me" checkbox
+* Login button (primary CTA)
+* "Forgot Password?" link
+* "Sign up" navigation link
+* Social login options (Google, Apple)
+
+**Navigation:**
+
+* Entry: Direct URL, app launch, logout redirect
+* Exit: Successful login → Dashboard, Sign up link → Registration
+
+#### Registration Screen (`/register`)
+
+**UI Elements:**
+
+* Back navigation arrow
+* Page title "Create Account"
+* Full name input field
+* Email input field with validation
+* Password input field with strength indicator
+* Confirm password field
+* Terms and conditions checkbox
+* Register button
+* "Already have an account?" login link
+
+**Navigation:**
+
+* Entry: Login screen link, direct URL
+* Exit: Successful registration → Dashboard, Login link → Login screen
+
+#### Forgot Password Screen (`/forgot-password`)
+
+**UI Elements:**
+
+* Back navigation arrow
+* Page title "Reset Password"
+* Email input field
+* Send reset link button
+* Return to login link
+* Success/error message display
+
+**Navigation:**
+
+* Entry: Login screen link
+* Exit: Back arrow → Login screen, successful reset → confirmation message
+
+### 5.2 Main Application Screens
+
+#### Dashboard Screen (`/dashboard`)
+
+**UI Elements:**
+
+* Header with app logo and user profile avatar
+* Monthly revenue card with current/previous month comparison
+* Total tenants count card
+* Outstanding payments alert badge
+* Overdue rent notification banner (conditional)
+* Quick action floating buttons (Add Payment, Add Tenant)
+* Recent payments list (last 5 transactions)
+* Navigation menu access
+* Pull-to-refresh functionality
+
+**Navigation:**
+
+* Entry: Successful login, bottom navigation
+* Exit: Bottom navigation to other sections, profile → Settings
+
+**Conditional Elements:**
+
+* Overdue payments banner (only when overdue exists)
+* Empty state message (when no tenants exist)
+
+#### Tenant Management Screen (`/tenants`)
+
+**UI Elements:**
+
+* Page header with "Tenants" title and search icon
+* Add new tenant floating action button
+* Search and filter bar
+* Tenant list with:
+    * Tenant photo/avatar
+    * Name and property address
+    * Current rent amount
+    * Payment status indicator
+    * Last payment date
+* Swipe actions (call, message, view details)
+* Empty state illustration (when no tenants)
+
+**Navigation:**
+
+* Entry: Bottom navigation, dashboard quick links
+* Exit: Tenant item tap → Tenant Details, FAB → Add Tenant
+
+#### Tenant Details Screen (`/tenants/:id`)
+
+**UI Elements:**
+
+* Back navigation arrow
+* Edit tenant button (top right)
+* Tenant photo and basic info card
+* Contact information section (phone, email)
+* Property details (address, rent amount, lease dates)
+* Payment history tab view
+* Payment status indicator
+* Add payment button
+* Call and message action buttons
+* Delete tenant option (in overflow menu)
+
+**Navigation:**
+
+* Entry: Tenant list item tap, payment records
+* Exit: Back arrow → Tenants list, Edit → Edit Tenant form
+
+#### Add/Edit Tenant Screen (`/tenants/new` or `/tenants/:id/edit`)
+
+**UI Elements:**
+
+* Back navigation arrow and page title
+* Photo upload section with camera/gallery options
+* Personal information form:
+    * Full name (required)
+    * Phone number with country code
+    * Email address
+    * Emergency contact
+* Property information form:
+    * Property address
+    * Unit/apartment number
+    * Monthly rent amount
+    * Lease start date
+    * Lease end date
+* Security deposit field
+* Additional notes text area
+* Save button (primary CTA)
+* Cancel button
+
+**Navigation:**
+
+* Entry: Tenants FAB, Tenant details edit button
+* Exit: Save → Tenant Details, Cancel/Back → Previous screen
+
+#### Payment Management Screen (`/payments`)
+
+**UI Elements:**
+
+* Page header with "Payments" title and filter icon
+* Date range selector
+* Payment status filter tabs (All, Paid, Pending, Overdue)
+* Search functionality
+* Payment list with:
+    * Tenant name and photo
+    * Payment amount and due date
+    * Payment status badge
+    * Payment method icon
+* Add payment floating action button
+* Total collected amount summary card
+
+**Navigation:**
+
+* Entry: Bottom navigation, dashboard links
+* Exit: Payment item tap → Payment Details, FAB → Add Payment
+
+#### Payment Details Screen (`/payments/:id`)
+
+**UI Elements:**
+
+* Back navigation arrow
+* Payment status banner
+* Tenant information card
+* Payment details:
+    * Amount paid/due
+    * Payment method
+    * Transaction date
+    * Due date
+    * Late fee (if applicable)
+* Receipt image/document viewer
+* Mark as paid/unpaid toggle
+* Edit payment button
+* Send receipt button
+* Payment history for this tenant link
+
+**Navigation:**
+
+* Entry: Payment list item tap
+* Exit: Back arrow → Payments list, Edit → Edit Payment
+
+#### Add Payment Screen (`/payments/new`)
+
+**UI Elements:**
+
+* Back navigation arrow and "Add Payment" title
+* Tenant selector dropdown with search
+* Payment amount input (with currency symbol)
+* Payment date picker (defaults to today)
+* Due date picker
+* Payment method selector (Cash, Check, Bank Transfer, etc.)
+* Payment status radio buttons (Paid/Pending)
+* Receipt photo upload option
+* Notes text field
+* Save payment button
+* Cancel button
+
+**Navigation:**
+
+* Entry: Multiple FABs, payment list, tenant details
+* Exit: Save → Payment Details, Cancel → Previous screen
+
+#### Reports Screen (`/reports`)
+
+**UI Elements:**
+
+* Page header with "Reports" title and export icon
+* Date range selector with preset options
+* Revenue summary cards:
+    * Total collected
+    * Total pending
+    * Total overdue
+* Interactive charts:
+    * Monthly revenue trends
+    * Payment status distribution
+    * Tenant payment performance
+* Export options (PDF, CSV)
+* Print report button
+* Filter by tenant dropdown
+
+**Navigation:**
+
+* Entry: Bottom navigation, dashboard analytics
+* Exit: Bottom navigation to other sections
+
+#### Settings Screen (`/settings`)
+
+**UI Elements:**
+
+* Back navigation arrow
+* User profile section with photo and name
+* Account settings:
+    * Change password
+    * Update profile information
+    * Notification preferences
+* App preferences:
+    * Currency settings
+    * Date format
+    * Language selection
+* Data management:
+    * Export data
+    * Import tenants
+    * Backup settings
+* Support links (Help, Contact, Privacy Policy)
+* Logout button
+* App version information
+
+**Navigation:**
+
+* Entry: Dashboard profile avatar, main menu
+* Exit: Back arrow → Dashboard, Logout → Login screen
+
+### 5.3 Utility Screens
+
+#### Notifications Screen (`/notifications`)
+
+**UI Elements:**
+
+* Back navigation arrow and "Notifications" title
+* Mark all as read button
+* Notification list with:
+    * Notification icon and type
+    * Title and description
+    * Timestamp
+    * Read/unread indicator
+* Empty state when no notifications
+* Clear all notifications option
+
+**Navigation:**
+
+* Entry: Notification badge tap, main menu
+* Exit: Back arrow → Previous screen, notification tap → relevant screen
+
+#### Search Results Screen (`/search`)
+
+**UI Elements:**
+
+* Search input with cancel button
+* Recent searches section
+* Filter chips (Tenants, Payments, Properties)
+* Search results list with highlighted matches
+* No results state illustration
+* Clear search history option
+
+**Navigation:**
+
+* Entry: Search icons from various screens
+* Exit: Cancel → Previous screen, result tap → relevant detail screen
+
+## 6\. App Menu and Navigation Structure
+
+### Primary Navigation (Bottom Tab Bar)
+
+The app utilizes a bottom navigation bar optimized for thumb navigation with the following tabs:
+
+* **Dashboard** (`/dashboard`) - Home icon - Main overview and quick stats
+* **Tenants** (`/tenants`) - People icon - Tenant management and directory
+* **Payments** (`/payments`) - Credit card icon - Payment tracking and collection
+* **Reports** (`/reports`) - Chart icon - Financial analytics and exports
+* **More** (`/settings`) - Menu icon - Settings and additional options
+
+### Secondary Navigation
+
+* **Header Navigation** \- Back arrows and contextual actions in top app bar
+* **Floating Action Buttons** \- Quick access to primary actions \(Add Tenant\, Add Payment\)
+* **Swipe Gestures** \- Left/right swipe on list items for quick actions
+* **Pull-to-Refresh** \- Data refresh on main content screens
+
+### Navigation Hierarchy
+
+```
+Dashboard (Root)
+├── Tenants
+│   ├── Tenant Details
+│   ├── Add/Edit Tenant
+│   └── Tenant Payment History
+├── Payments
+│   ├── Payment Details
+│   ├── Add Payment
+│   └── Edit Payment
+├── Reports
+│   └── Export Options
+└── Settings
+    ├── Profile Settings
+    ├── Notification Preferences
+    └── Data Management
+```
+
+### Deep Linking Support
+
+Each screen supports deep linking for direct access and sharing:
+
+* Tenant profiles: `/tenants/:tenantId`
+* Payment records: `/payments/:paymentId`
+* Reports with filters: `/reports?month=2024-01&tenant=123`
+
+## 7\. User Flow
+
+### Initial Setup Flow
+
+1. **App Launch** \- User opens Renti PWA in mobile browser
+2. **Authentication** \- User sees login screen\, either signs in or creates new account
+3. **First-time Setup** \- After registration\, user is guided through app permissions \(notifications\, camera access\)
+4. **Empty Dashboard** \- User lands on dashboard with empty state and onboarding tips
+5. **Add First Tenant** \- Prominent call\-to\-action guides user to add their first tenant
+
+### Primary User Journey - Rent Collection
+
+1. **Dashboard Access** \- User opens app and sees dashboard with current month overview
+2. **Payment Due Alert** \- User notices overdue payment notification banner
+3. **Navigate to Payments** \- User taps bottom navigation "Payments" tab
+4. **Filter Overdue** \- User filters payments by "Overdue" status to see pending collections
+5. **Select Tenant** \- User taps on specific tenant with overdue payment
+6. **Payment Details** \- User reviews payment details and tenant information
+7. **Mark as Paid** \- User receives payment and marks it as paid\, selecting payment method
+8. **Confirmation** \- System shows payment confirmation and updates dashboard totals
+9. **Return to Dashboard** \- User navigates back to see updated statistics
+
+### Tenant Management Flow
+
+1. **Tenant Directory** \- User accesses tenant list from bottom navigation
+2. **Search/Filter** \- User uses search to find specific tenant or browse all
+3. **Tenant Selection** \- User taps on tenant card to view detailed profile
+4. **Review Information** \- User checks contact details\, lease information\, and payment history
+5. **Contact Tenant** \- User can directly call\, message\, or email tenant from profile
+6. **Update Details** \- User edits tenant information if changes needed
+7. **Payment History** \- User reviews tenant's complete payment history and trends
+
+### Monthly Reporting Flow
+
+1. **Reports Access** \- User navigates to Reports section from bottom navigation
+2. **Date Selection** \- User selects month/quarter/year for report generation
+3. **Data Review** \- User examines revenue charts\, payment distributions\, and trends
+4. **Filter Analysis** \- User filters by specific tenants or payment methods for detailed insights
+5. **Export Data** \- User exports report as PDF for records or tax purposes
+6. **Share Results** \- User can share or print reports for accounting or management purposes
+
+### Quick Payment Entry Flow
+
+1. **Dashboard Quick Action** \- User taps floating "Add Payment" button from any screen
+2. **Tenant Selection** \- User selects tenant from dropdown with type\-ahead search
+3. **Payment Details** \- User enters amount\, date\, and payment method
+4. **Receipt Upload** \- User optionally captures receipt photo using device camera
+5. **Confirmation** \- User reviews details and saves payment
+6. **Automatic Update** \- Dashboard and tenant records update automatically with new payment
+7. **Notification** \- Optional: System sends payment confirmation to tenant
+
+### Settings and Preferences Flow
+
+1. **Settings Access** \- User taps profile avatar or "More" tab to access settings
+2. **Profile Management** \- User updates personal information and app preferences
+3. **Notification Setup** \- User configures payment reminders and alert preferences
+4. **Data Management** \- User exports data\, sets up backups\, or imports existing tenant data
+5. **Support Access** \- User accesses help documentation or contact support if needed
+
+### Offline Usage Flow
+
+1. **Offline Detection** \- App detects lost internet connection and shows offline indicator
+2. **Local Data Access** \- User can still view cached tenant and payment data
+3. **Offline Entry** \- User can add payments and tenant updates\, stored locally
+4. **Sync Queue** \- App queues changes for synchronization when connection restored
+5. **Auto Sync** \- When online\, app automatically syncs all pending changes to server
+6. **Conflict Resolution** \- If conflicts occur\, app presents options to user for resolution
